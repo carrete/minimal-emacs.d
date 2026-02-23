@@ -451,7 +451,7 @@ this stage of initialization."
 (setq gnutls-min-prime-bits 3072)  ; Stronger GnuTLS encryption
 
 ;; This results in a more compact output that emphasizes performance
-(setq use-package-expand-minimally (not noninteractive))
+(setq use-package-expand-minimally t)
 
 (setq use-package-minimum-reported-time (if minimal-emacs-debug 0 0.1))
 (setq use-package-verbose minimal-emacs-debug)
