@@ -46,11 +46,13 @@
 
 ;;; package.el
 
-(when (bound-and-true-p minimal-emacs-package-initialize-and-refresh)
+(when (and (bound-and-true-p minimal-emacs-package-initialize-and-refresh)
+           (not (or (fboundp 'straight-use-package)
+                    (fboundp 'elpaca))))
   ;; Initialize and refresh package contents again if needed
   (package-initialize)
   (unless (package-installed-p 'use-package)
-    (unless (seq-empty-p package-archive-contents)
+    (unless package-archive-contents
       (package-refresh-contents))
     (package-install 'use-package))
   (require 'use-package))
