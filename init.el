@@ -51,10 +51,11 @@
                     (fboundp 'elpaca))))
   ;; Initialize and refresh package contents again if needed
   (package-initialize)
-  (unless (package-installed-p 'use-package)
-    (unless package-archive-contents
-      (package-refresh-contents))
-    (package-install 'use-package))
+  (when (version< emacs-version "29.1")
+    (unless (package-installed-p 'use-package)
+      (unless package-archive-contents
+        (package-refresh-contents))
+      (package-install 'use-package)))
   (require 'use-package))
 
 ;;; Minibuffer
