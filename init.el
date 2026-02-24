@@ -47,6 +47,7 @@
 ;;; package.el
 
 (when (and (bound-and-true-p minimal-emacs-package-initialize-and-refresh)
+           (not (bound-and-true-p byte-compile-current-file))
            (not (or (fboundp 'straight-use-package)
                     (fboundp 'elpaca))))
   ;; Initialize and refresh package contents again if needed
