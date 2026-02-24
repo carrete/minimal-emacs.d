@@ -280,6 +280,7 @@ Native compilation enhances Emacs performance by converting Elisp code into nati
 ;; Ensure adding the following compile-angel code at the very beginning
 ;; of your `~/.emacs.d/post-init.el` file, before all other packages.
 (use-package compile-angel
+  :ensure t
   :demand t
   :config
   ;; The following disables compilation of packages during installation;
@@ -323,6 +324,7 @@ To fix this, add **exec-path-from-shell** to `~/.emacs.d/post-init.el`:
 (use-package exec-path-from-shell
   :if (and (or (display-graphic-p) (daemonp))
            (eq system-type 'darwin)) ; macOS only
+  :ensure t
   :demand t
   :functions exec-path-from-shell-initialize
   :config
@@ -461,6 +463,7 @@ To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
 ;; current candidates, positioned either below or above the point. Candidates
 ;; can be selected by navigating up or down.
 (use-package corfu
+  :ensure t
   :commands (corfu-mode global-corfu-mode)
 
   :hook ((prog-mode . corfu-mode)
@@ -482,6 +485,7 @@ To configure `corfu` and `cape`, add the following to `~/.emacs.d/post-init.el`:
 ;; in-buffer completion. It integrates with Corfu or the default completion UI,
 ;; by providing additional backends through completion-at-point-functions.
 (use-package cape
+  :ensure t
   :commands (cape-dabbrev cape-file cape-elisp-block)
   :bind ("C-c p" . cape-prefix-map)
   :init
@@ -510,6 +514,7 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
 ;; navigate and select from completion candidates (e.g., when `M-x` is pressed).
 (use-package vertico
   ;; (Note: It is recommended to also enable the savehist package.)
+  :ensure t
   :config
   (vertico-mode))
 
@@ -517,6 +522,7 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
 ;; to input multiple patterns separated by spaces, which Orderless then
 ;; matches in any order against the candidates.
 (use-package orderless
+  :ensure t
   :custom
   (completion-styles '(orderless basic))
   (completion-category-defaults nil)
@@ -526,6 +532,7 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
 ;; In addition to that, Marginalia also enhances Vertico by adding rich
 ;; annotations to the completion candidates displayed in Vertico's interface.
 (use-package marginalia
+  :ensure t
   :commands (marginalia-mode marginalia-cycle)
   :hook (after-init . marginalia-mode))
 
@@ -537,6 +544,7 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
   ;; Embark is an Emacs package that acts like a context menu, allowing
   ;; users to perform context-sensitive actions on selected items
   ;; directly from the completion interface.
+  :ensure t
   :commands (embark-act
              embark-dwim
              embark-export
@@ -559,12 +567,14 @@ Add the following to `~/.emacs.d/post-init.el` to set up Vertico, Consult, and E
                  (window-parameters (mode-line-format . none)))))
 
 (use-package embark-consult
+  :ensure t
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
 ;; Consult offers a suite of commands for efficient searching, previewing, and
 ;; interacting with buffers, file contents, and more, improving various tasks.
 (use-package consult
+  :ensure t
   :bind (;; C-c bindings in `mode-specific-map'
          ("C-c M-x" . consult-mode-command)
          ("C-c h" . consult-history)
@@ -670,6 +680,7 @@ To install and configure these packages, add the following to `~/.emacs.d/post-i
 ;; The undo-fu package is a lightweight wrapper around Emacs' built-in undo
 ;; system, providing more convenient undo/redo functionality.
 (use-package undo-fu
+  :ensure t
   :commands (undo-fu-only-undo
              undo-fu-only-redo
              undo-fu-only-redo-all
@@ -682,6 +693,7 @@ To install and configure these packages, add the following to `~/.emacs.d/post-i
 ;; The undo-fu-session package complements undo-fu by enabling the saving
 ;; and restoration of undo history across Emacs sessions, even after restarting.
 (use-package undo-fu-session
+  :ensure t
   :commands undo-fu-session-global-mode
   :hook (after-init . undo-fu-session-global-mode))
 ```
@@ -740,6 +752,7 @@ Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency
 
 ;; Vim emulation
 (use-package evil
+  :ensure t
   :commands (evil-mode evil-define-key)
   :hook (after-init . evil-mode)
 
@@ -780,6 +793,7 @@ Configuring Vim keybindings in Emacs can greatly enhance your editing efficiency
 
 (use-package evil-collection
   :after evil
+  :ensure t
   :init
   ;; It has to be defined before evil-colllection
   (setq evil-collection-setup-minibuffer t)
@@ -800,6 +814,7 @@ You can also install the [vim-tab-bar](https://github.com/jamescherti/vim-tab-ba
 ``` emacs-lisp
 ;; Give Emacs tab-bar a style similar to Vim's
 (use-package vim-tab-bar
+  :ensure t
   :commands vim-tab-bar-mode
   :hook (after-init . vim-tab-bar-mode))
 ```
@@ -817,6 +832,7 @@ The `evil-surround` package simplifies handling surrounding characters, such as 
 ;; using S" or gS".
 (use-package evil-surround
   :after evil
+  :ensure t
   :commands global-evil-surround-mode
   :custom
   (evil-surround-pairs-alist
@@ -862,6 +878,7 @@ To configure **easysession**, add the following to `~/.emacs.d/post-init.el`:
 ;; manage Emacs editing sessions and utilizes built-in Emacs functions to
 ;; persist and restore frames.
 (use-package easysession
+  :ensure t
   :commands (easysession-switch-to
              easysession-save-as
              easysession-save-mode
@@ -926,6 +943,7 @@ This configuration sets up `markdown-mode` with deferred loading to improve star
 ```elisp
 ;; Automatically generate a table of contents when editing Markdown files
 (use-package markdown-toc
+  :ensure t
   :commands (markdown-toc-generate-toc
              markdown-toc-generate-or-refresh-toc
              markdown-toc-delete-toc
@@ -1041,6 +1059,7 @@ For folding based on indentation levels, the **[outline-indent](https://github.c
 ;; - Move backward/forward to the indentation level of the current line
 ;; - and other features.
 (use-package outline-indent
+  :ensure t
   :commands outline-indent-minor-mode
 
   :custom
@@ -1109,6 +1128,7 @@ To configure **apheleia**, add the following to `~/.emacs.d/post-init.el`:
 ;; Apheleia is an Emacs package designed to run code formatters (e.g., Shfmt,
 ;; Black and Prettier) asynchronously without disrupting the cursor position.
 (use-package apheleia
+  :ensure t
   :commands (apheleia-mode
              apheleia-global-mode)
   :hook ((prog-mode . apheleia-mode)))
@@ -1163,6 +1183,7 @@ The [yasnippet-snippets](https://github.com/AndreaCrotti/yasnippet-snippets) pac
 ```elisp
 ;; The official collection of snippets for yasnippet.
 (use-package yasnippet-snippets
+  :ensure t
   :after yasnippet)
 
 ;; YASnippet is a template system designed that enhances text editing by
@@ -1170,6 +1191,7 @@ The [yasnippet-snippets](https://github.com/AndreaCrotti/yasnippet-snippets) pac
 ;; abbreviation, YASnippet automatically expands it into a full template, which
 ;; can include placeholders, fields, and dynamic content.
 (use-package yasnippet
+  :ensure t
   :commands (yas-minor-mode
              yas-global-mode)
 
@@ -1269,6 +1291,7 @@ To enable **stripspace** and automatically delete trailing whitespace, add the f
 ;; that automatically removes trailing whitespace and blank lines at the end of
 ;; the buffer when saving.
 (use-package stripspace
+  :ensure t
   :commands stripspace-local-mode
 
   ;; Enable for prog-mode-hook, text-mode-hook, conf-mode-hook
@@ -1323,6 +1346,7 @@ To configure **org-mode**, add the following to `~/.emacs.d/post-init.el`:
 ;; scheduling, deadlines, time tracking, and exporting to multiple formats
 ;; including HTML, LaTeX, PDF, and Markdown.
 (use-package org
+  :ensure t
   :commands (org-mode org-version)
   :mode
   ("\\.org\\'" . org-mode)
@@ -1392,6 +1416,7 @@ To configure **auto-package-update**, add the following to `~/.emacs.d/post-init
 ```elisp
 ;; This automates the process of updating installed packages
 (use-package auto-package-update
+  :ensure t
   :custom
   ;; Set the number of days between automatic updates.
   ;; Here, packages will only be updated if at least 7 days have passed
@@ -1436,6 +1461,7 @@ To configure **buffer-terminator**, add the following to `~/.emacs.d/post-init.e
 
 ```emacs-lisp
 (use-package buffer-terminator
+  :ensure t
   :custom
   ;; Enable/Disable verbose mode to log buffer cleanup events
   (buffer-terminator-verbose nil)
@@ -1467,6 +1493,7 @@ To configure **treemacs**, add the following to `~/.emacs.d/post-init.el`:
 ;; in the left window, providing a persistent view of files, projects, and
 ;; other elements.
 (use-package treemacs
+  :ensure t
   :commands (treemacs
              treemacs-select-window
              treemacs-delete-other-windows
@@ -1565,13 +1592,16 @@ To configure **treemacs**, add the following to `~/.emacs.d/post-init.el`:
   (treemacs-hide-gitignored-files-mode nil))
 
 ;; (use-package treemacs-evil
-;;   :after (treemacs evil))
+;;   :after (treemacs evil)
+;;   :ensure t)
 ;;
 ;; (use-package treemacs-icons-dired
-;;   :hook (dired-mode . treemacs-icons-dired-enable-once))
+;;   :hook (dired-mode . treemacs-icons-dired-enable-once)
+;;   :ensure t)
 ;;
 ;; (use-package treemacs-tab-bar  ; treemacs-tab-bar if you use tab-bar-mode
 ;;   :after (treemacs)
+;;   :ensure t
 ;;   :config (treemacs-set-scope-type 'Tabs))
 ;;
 ;; (treemacs-start-on-boot)
@@ -1586,6 +1616,7 @@ To configure **helpful**, add the following to `~/.emacs.d/post-init.el`:
 ;; Helpful is an alternative to the built-in Emacs help that provides much more
 ;; contextual information.
 (use-package helpful
+  :ensure t
   :commands (helpful-callable
              helpful-variable
              helpful-key
@@ -1611,6 +1642,7 @@ It operates by generating a dynamic, temporary mapping: upon invocation, such as
 To configure **avy**, add the following to `~/.emacs.d/post-init.el`:
 ```elisp
 (use-package avy
+  :ensure t
   :commands (avy-goto-char
              avy-goto-char-2
              avy-next)
@@ -1632,6 +1664,7 @@ The functions above also ensures that any modified buffers are saved prior to ex
 To configure **bufferfile**, add the following to `~/.emacs.d/post-init.el`:
 ```elisp
 (use-package bufferfile
+  :ensure t
   :commands (bufferfile-copy
              bufferfile-rename
              bufferfile-delete)
@@ -1659,12 +1692,14 @@ To enhance the Elisp development experience, add the following to `~/.emacs.d/po
 ```emacs-lisp
 ;; Enables automatic indentation of code while typing
 (use-package aggressive-indent
+  :ensure t
   :commands aggressive-indent-mode
   :hook
   (emacs-lisp-mode . aggressive-indent-mode))
 
 ;; Highlights function and variable definitions in Emacs Lisp mode
 (use-package highlight-defined
+  :ensure t
   :commands highlight-defined-mode
   :hook
   (emacs-lisp-mode . highlight-defined-mode))
@@ -1674,6 +1709,7 @@ Other optional packages that may be useful include:
 ```emacs-lisp
 ;; Prevent parenthesis imbalance
 (use-package paredit
+  :ensure t
   :commands paredit-mode
   :hook
   (emacs-lisp-mode . paredit-mode)
@@ -1683,12 +1719,14 @@ Other optional packages that may be useful include:
 ;; For paredit+Evil mode users: enhances paredit with Evil mode compatibility
 ;; --------------------------------------------------------------------------
 ;; (use-package enhanced-evil-paredit
+;;   :ensure t
 ;;   :commands enhanced-evil-paredit-mode
 ;;   :hook
 ;;   (paredit-mode . enhanced-evil-paredit-mode))
 
 ;; Displays visible indicators for page breaks
 (use-package page-break-lines
+  :ensure t
   :commands (page-break-lines-mode
              global-page-break-lines-mode)
   :hook
@@ -1697,6 +1735,7 @@ Other optional packages that may be useful include:
 ;; Provides functions to find references to functions, macros, variables,
 ;; special forms, and symbols in Emacs Lisp
 (use-package elisp-refs
+  :ensure t
   :commands (elisp-refs-function
              elisp-refs-macro
              elisp-refs-variable
@@ -1720,6 +1759,7 @@ To configure **inhibit-mouse**, add the following to `~/.emacs.d/post-init.el`:
 ;; - Reinforce a keyboard-centric workflow by discouraging reliance on the mouse
 ;;   for navigation.
 (use-package inhibit-mouse
+  :ensure t
   :config
   (if (daemonp)
       (add-hook 'server-after-make-frame-hook #'inhibit-mouse-mode)
@@ -1747,6 +1787,7 @@ To enable *quick-sdcv*, add the following to your `~/.emacs.d/post-init.el`:
 
 ```emacs-lisp
 (use-package quick-sdcv
+  :ensure t
   :custom
   (quick-sdcv-unique-buffers t)
   (quick-sdcv-dictionary-prefix-symbol "►")
