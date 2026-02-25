@@ -28,6 +28,19 @@
 
 ;;; Before package
 
+;; The initial buffer is created during startup even in non-interactive
+;; sessions, and its major mode is fully initialized. Modes like `text-mode',
+;; `org-mode', or even the default `lisp-interaction-mode' load extra packages
+;; and run hooks, which can slow down startup.
+;;
+;; Using `fundamental-mode' for the initial buffer to avoid unnecessary
+;; startup overhead.
+(setq initial-major-mode 'fundamental-mode
+      initial-scratch-message nil)
+
+;; Set-language-environment sets default-input-method, which is unwanted.
+(setq default-input-method nil)
+
 ;; Ask the user whether to terminate asynchronous compilations on exit.
 ;; This prevents native compilation from leaving temporary files in /tmp.
 (setq native-comp-async-query-on-exit t)
